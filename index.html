@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Keyaan | Amazon products</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* ORANGE THEME (was teal) */
+      --main-color: #e8964a;
+      --dark-bg: #000000;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: var(--dark-bg);
+      color: var(--main-color);
+      font-family: 'Arial Black', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+    .intro-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: white;
+      z-index: 999;
+      animation: flashOut 1s ease-in-out forwards;
+    }
+    @keyframes flashOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+    .logo-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(3);
+      opacity: 0;
+      animation: logoIntro 2s 1s ease-out forwards, logoMoveDown 1.5s 3.2s ease-in-out forwards;
+      z-index: 10;
+    }
+    .logo-container img {
+      width: 120px;
+      filter: drop-shadow(0 0 20px var(--main-color));
+    }
+    @keyframes logoIntro {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+      60% { opacity: 1; transform: translate(-50%, -50%) scale(3.5); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(3); }
+    }
+    @keyframes logoMoveDown {
+      to {
+        top: 100px;
+        transform: translate(-50%, 0) scale(1.2);
+      }
+    }
+    .title-text {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-top: 200px;
+      opacity: 0;
+      animation: textSlideUp 1s 4.6s ease-out forwards;
+      z-index: 10;
+      position: relative;
+      font-family: 'Anton', sans-serif
+    }
+    .subtitle {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 1.3rem;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInSub 1s 5s ease-out forwards;
+      z-index: 10;
+      position: relative;
+    }
+    .btn-group {
+      text-align: center;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeInButtons 1s 5.8s ease-out forwards;
+      z-index: 10;
+      position: relative;
+      animation-fill-mode: forwards;
+    }
+    @keyframes textSlideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInSub {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInButtons {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn {
+      background: var(--main-color);
+      color: black;
+      font-weight: bold;
+      padding: 12px 30px;
+      margin: 15px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background: #e8924da5;
+      box-shadow: 0 0 10px var(--main-color);
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      background: #111;
+      padding: 50px;
+      width: 98%;
+      max-width: 850px;
+      z-index: 1000;
+      box-shadow: 0 0 30px var(--main-color);
+      border-radius: 15px;
+      color: white;
+      text-align: center;
+    }
+    .popup img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+    .popup .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--main-color);
+    }
+    .works-btns button {
+      background: var(--main-color);
+      color: black;
+      padding: 10px;
+      margin: 10px auto;
+      width: 80%;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .scratch {
+      background-image: url('images/scratch.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 60px;
+      width: 200px;
+      margin: 20px auto;
+      z-index: 10;
+      position: relative;
+    }
+    .bg-decor {
+      position: absolute;
+      color: rgba(255,165,0,0.06);
+      font-family: monospace;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      white-space: pre;
+      animation: rainDrop linear infinite;
+    }
+    @keyframes rainDrop {
+      0% { transform: translateY(-100px); opacity: 0; }
+      10% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--main-color);
+      border-radius: 50%;
+      animation: sparkle 2s infinite;
+      z-index: 1;
+    }
+    @keyframes sparkle {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .box {
+      width: 300px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .box-video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
+    .box p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .contact-btn {
+      display: inline-block;
+      background-color: #e8964a;
+      color: #000;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .contact-btn:hover {
+      background-color: #e8924da5;
+    }
+    #products {
+      max-height: 80vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .contact-form input, .contact-form textarea, .contact-form select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      background: var(--main-color);
+      color: black;
+      font-weight: bold;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .contact-form button:hover {
+      background: #e8924da5;
+      box-shadow: 0 0 10px var(--main-color);
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay>
+    <source src="intro.mp3" type="audio/mpeg" />
+  </audio>
+  <div class="intro-screen"></div>
+  <div class="logo-container">
+    <img src="images/k-logo.png" alt="K Logo">
+  </div>
+  <div class="title-text">Keyaan</div>
+  <div class="subtitle">14 y/o </div>
+  <div class="scratch"></div>
+  <div class="btn-group">
+    <button class="btn" onclick="openPopup('about')">About Me</button>
+    <button class="btn" onclick="openPopup('products')">Products</button>
+    <button class="btn" onclick="openPopup('contact')">Contact me</button>
+  </div>
+  <div id="about" class="popup">
+    <span class="close" onclick="closePopup('about')">&times;</span>
+    <img src="images/k-logo.-removebg-preview.png" alt="Logo">
+    <h2>About Me</h2>
+    <p>I'm Keyaan - A 13 year old from the UAE trying to make some spare <strong>Cash</strong> in my free time.</p><br>
+    <p>I made this web page so that u can buy products from Amazon which i link to it for cheap prices and to know some Amazon <strong>Offer codes!!</strong></p><br>
+    <p>I like football,editing,gaming,gym etc</p><br>
+    <p>Thats all i have to say about me.<strong>Enjoy Your shopping spree :></strong></p><br>
+  </div>
+  <div id="products" class="popup">
+    <span class="close" onclick="closePopup('products')">&times;</span>
+    <img src="images/k-logo.png" alt="Logo">
+    <h2>Products</h2>
+    <div class="box">
+        <img src="videos/video3.mp4">
+      <p>Product name</p>
+      <a class="contact-btn" href="link">Purchase </a>
+    </div>
+    <div class="box">
+        <img src="videos/video3.mp4">
+      <p>Product name</p>
+      <a class="contact-btn" href="link">Purchase </a>
+    </div>
+    <div class="box">
+        <img src="videos/video3.mp4">
+      <p>Product name</p>
+      <a class="contact-btn" href="link">Purchase </a>
+    </div>
+  </div>
+
+  <!-- Contact Popup -->
+  <div id="contact" class="popup">
+    <span class="close" onclick="closePopup('contact')">&times;</span>
+    <img src="images/k-logo.png" alt="Logo">
+    <h2>Contact Me</h2>
+    <form action="https://formspree.io/f/xblkqvkb" method="POST" class="contact-form" id="contactForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <!-- Message Popup for Success/Error -->
+  <div id="messagePopup" class="popup">
+    <span class="close" onclick="closePopup('messagePopup')">&times;</span>
+    <img src="images/k-logo.png" alt="Logo">
+    <h2 id="messageTitle"></h2>
+    <p id="messageText"></p>
+  </div>
+
+  <script>
+    function openPopup(id) {
+      document.getElementById(id).style.display = 'block';
+    }
+    function closePopup(id) {
+      const popup = document.getElementById(id);
+      popup.style.display = 'none';
+      const videos = popup.getElementsByTagName('video');
+      for (let video of videos) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
+
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.top = Math.random() * 100 + 'vh';
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.animationDelay = (Math.random() * 3) + 's';
+      document.body.appendChild(s);
+    }
+    for (let i = 0; i < 60; i++) {
+      const l = document.createElement('div');
+      l.className = 'bg-decor';
+      l.textContent = Math.random().toString(36).substring(2, 3).toUpperCase();
+      l.style.left = Math.random() * 100 + 'vw';
+      l.style.top = '-' + Math.random() * 100 + 'px';
+      l.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+      l.style.animationDuration = (Math.random() * 10 + 5) + 's';
+      document.body.appendChild(l);
+    }
+
+    // Close select dropdown after choosing
+    document.getElementById('packageSelect').addEventListener('change', function () {
+      this.blur();
+    });
+
+    // Form submission with success/error messages in messagePopup
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          // Success message
+          showMessage('Thank You!', '✅ Your message has been sent successfully.');
+          form.reset();
+          closePopup('contact');
+        } else {
+          // Error message
+          showMessage('Oops!', '⚠️ We are facing technical difficulties. Please try again later.');
+        }
+      }).catch(() => {
+        showMessage('Oops!', '⚠️ We are facing technical difficulties. Please try again later.');
+      });
+    });
+
+    function showMessage(title, text) {
+      document.getElementById('messageTitle').textContent = title;
+      document.getElementById('messageText').textContent = text;
+      openPopup('messagePopup');
+    }
+  </script>
+</body>
+</html>
